@@ -5,7 +5,7 @@ def system_prompt(example):
   You are a medical data expert. Your objecive is to enrich an EHR dataset following a set of rules.
 </role>
 <example>
-{example}
+  {example}
 </example>
 <rules>
   <rule>
@@ -17,13 +17,16 @@ def system_prompt(example):
   <rule>
     You will be provided with a list of tags and their descriptions. You must use them to construct the EHR.
   </rule>
+  <rule>
+    The content of the response must be your own elaboration, the example is only for style and format.
+  </rule>
 </rules>
 """
 MEDDOCAN_HUMAN_EXAMPLE = [
-  {'tag': 'NAME', 'text': 'Jose'},
-  {'tag': 'NAME', 'text': 'Aranda Martinez'},
-  {'tag': 'AGE', 'text': '37 años'},
-  {'tag': 'LOCATION', 'text': 'Calle Losada Martí 23, 5 B'}
+  {'tag': 'NAME', 'text': 'Jose', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'},
+  {'tag': 'NAME', 'text': 'Aranda Martinez', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'},
+  {'tag': 'AGE', 'text': '37 años', 'TYPE': 'EDAD_SUJETO_ASISTENCIA'},
+  {'tag': 'LOCATION', 'text': 'Calle Losada Martí 23, 5 B', 'TYPE': 'CALLE'}
 ]
 
 MEDDOCAN_AI_RESPONSE = read_xml('examples/meddocan/response_example.xml')
