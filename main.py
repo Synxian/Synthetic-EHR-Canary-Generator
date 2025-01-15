@@ -35,15 +35,18 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Your program description')
 
   parser.add_argument(
+    '-o',
     '--output_dir',
     help='Directory to save generated canaries'
   )
   parser.add_argument(
+    '-d',
     '--dataset',
     help='The reference dataset for canary generation',
     default='meddocan'
   )
   parser.add_argument(
+    '-i',
     '--input_file',
     help='JSON file for the canaries options'
   )
@@ -52,11 +55,11 @@ if __name__ == '__main__':
     '--temperature',
     type=float,
     help='GPT temperature',
-    default=0
+    default=0.5
   )
   args = parser.parse_args()
 
-  
+
   model_name = "gpt-4o-mini"
   llm = ChatOpenAI(model=model_name, temperature=args.temperature)
   if args.dataset == 'meddocan':
