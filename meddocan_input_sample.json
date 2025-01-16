@@ -1,0 +1,18 @@
+[
+    [
+        {"tag": "NAME", "text": "Jotaro"},
+        {"tag": "NAME", "text": "Kujo"},
+        {"tag": "AGE", "text": "37 años"},
+        {"tag": "LOCATION", "text": "Calle Losada Martí 23, 5 B"},
+        {"tag": "LOCATION", "text": "Tokio", "TYPE": "TERRITORIO"},
+        {"tag": "LOCATION", "text": "Japon", "TYPE": "PAIS"}
+    ],
+    [
+        {"tag": "NAME", "text": "Jolyne"},
+        {"tag": "NAME", "text": "Kujo"},
+        {"tag": "AGE", "text": "37 años"},
+        {"tag": "LOCATION", "text": "Calle Losada Martí 23, 6 B"},
+        {"tag": "LOCATION", "text": "Tokio", "TYPE": "TERRITORIO"},
+        {"tag": "LOCATION", "text": "Japon", "TYPE": "PAIS"}
+    ]
+]
