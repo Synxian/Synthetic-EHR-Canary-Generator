@@ -41,7 +41,7 @@ async def process_input(chain, input_data, semaphore):
   while attempts < 3:
       async with semaphore:
           try:
-              req = await chain.ainvoke({"user_input": input_data})
+              req = await chain.ainvoke({"user_input": str(input_data)})
               return req
           except (json.JSONDecodeError, KeyError) as e:
               print(f'Attempt {attempts + 1} failed: "{type(e).__name__}: {str(e)}"')
