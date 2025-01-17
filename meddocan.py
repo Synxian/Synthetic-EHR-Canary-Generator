@@ -17,8 +17,6 @@ def meddocan_prompt(mode):
         ])
     elif mode == 'history':
         return ChatPromptTemplate([
-            ('system', continuous_history_system_prompt(meddocan_example())),
-            ('human', MULTIPLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE),
-            ('ai', f'{MEDDOCAN_AI_RESPONSE}|-|'),
+            ('system', continuous_history_system_prompt()),
             ('human', "{user_input}")
         ])

@@ -15,10 +15,6 @@ def read_json(path):
         json_data = json.load(file)
     return json_data
 
-def prepare_input(input, mode, n_samples):
+def prepare_input(input):
     tags = [f'<tag>\n{tag}\n</tag>' for tag in input]
-    tags_string =  f"<tags>\n{os.linesep.join(tags)}</tags>"
-    if mode == 'single':
-        return tags_string
-    elif mode == 'history':
-        return f'<n_samples>\n{n_samples}\n</n_samples>\n{tags_string}'
+    return f"<tags>\n{os.linesep.join(tags)}</tags>"

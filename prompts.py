@@ -45,7 +45,7 @@ def single_history_system_prompt(example):
 </response_format>
 """
 
-def continuous_history_system_prompt(example):
+def continuous_history_system_prompt():
     return f"""
 <role>
     You are a medical data expert specializing in Electronic Health Records with deep knowledge of:
@@ -64,70 +64,48 @@ def continuous_history_system_prompt(example):
     
     You must maintain authenticity while creating diverse cases that represent real-world clinical scenarios.
 </role>
-<example>
-    {example}
-</example>
 <rules>
     <rule>
-        The generated EHR must follow the structure and style of the example.
+        You will be provided with an EHR, your response must be an EHR that continues a thread of distinct doctor visits.
     </rule>
     <rule>
-        The generated medical text must be coherent in the context of doctor visits, always keeping in mind the generated thread of observations and the individual circumstances.
+        The generated EHR must follow the structure and style of the input.
     </rule>
     <rule>
-        The generated EHRs must be a thread of multiple, distinct doctor visits. You may change the subject age as you see fit.
+        Each generated medical text must be extense, with rich medical language.
     </rule>
     <rule>
-        For records spanning multiple years, documentation should reflect age-appropriate health concerns, preventive care, and developmental milestones when relevant.
+        All medical conditions, medications, and procedures must be clinically appropriate and logically related. For example, medications should match diagnoses, and procedures should align with the patient's conditions.
     </rule>
     <rule>
-        Chronic conditions must show appropriate progression or management over time. Changes in symptoms, treatments, and complications should reflect realistic disease trajectories.
-    </rule>
-    <rule>
-        Patient responses to treatments must be documented consistently across visits, showing either improvement, stability, or deterioration with appropriate clinical reasoning.
-    </rule>
-    <rule>
-        Each generated medical text must be extense, with a length comparable to the example.
-    </rule>
-    <rule>
-        Each generated EHR MUST be a valid file in the same format as the example (i.e. if it's an xml, then the EHR should be a valid xml file).
-        At the end of each EHR, you must include a separator to indicate the end of the current EHR. The separator is |-|
+        Medication changes must be justified by clinical events (e.g., inadequate response, side effects, new conditions) and should include appropriate documentation of the reasoning.
     </rule>
 </rules>
-<user_input>
-    You will receive two things:
-    <n_samples>
-        - A positive integer specifying the number of EHRs to generate
-        - Each generated EHR will maintain consistency with the base profile
-        - Each generated EHR is its own valid file, that mantains the same format as the example.
-        - Each EHR must be separated by |-|
-    <tags>
-        - Contains a structured list of attributes describing an individual
-        - May include demographic data, medical history, medications, etc.
-        - All tags must be properly formatted and contain valid values
-        - This data serves as the foundation for generating consistent EHRs
-</user_input>
+<response_format>
+    Your response MUST be a valid file in the same format as the example (i.e. if it's an xml, the you should output a valid xml file),
+    without markdown code block formatting
+</response_format>
 """
 
 SINGLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE = """
 <tags>
     <tag>
-        {'tag': 'NAME', 'text': 'Jose', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'}
+        {{{{'tag': 'NAME', 'text': 'Jose', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'}}}}
     </tag>
     <tag>
-        {'tag': 'NAME', 'text': 'Aranda Martinez', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'}
+        {{{{'tag': 'NAME', 'text': 'Aranda Martinez', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'}}}}
     </tag>
     <tag>
-        {'tag': 'AGE', 'text': '37 años', 'TYPE': 'EDAD_SUJETO_ASISTENCIA'}
+        {{{{'tag': 'AGE', 'text': '37 años', 'TYPE': 'EDAD_SUJETO_ASISTENCIA'}}}}
     </tag>
     <tag>
-        {'tag': 'LOCATION', 'text': 'Calle Losada Martí 23, 5 B', 'TYPE': 'CALLE'}
+        {{{{'tag': 'LOCATION', 'text': 'Calle Losada Martí 23, 5 B', 'TYPE': 'CALLE'}}}}
     </tag>
     <tag>
-        {'tag': 'LOCATION', 'text': 'Madrid', 'TYPE': 'TERRITORIO'}
+        {{{{'tag': 'LOCATION', 'text': 'Madrid', 'TYPE': 'TERRITORIO'}}}}
     </tag>
     <tag>
-        {'tag': 'LOCATION', 'text': 'España', 'TYPE': 'PAIS'}
+        {{{{'tag': 'LOCATION', 'text': 'España', 'TYPE': 'PAIS'}}}}
     </tag>
 </tags>
 """
