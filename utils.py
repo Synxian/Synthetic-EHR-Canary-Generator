@@ -20,4 +20,5 @@ def prepare_input(input, mode, n_samples):
     tags_string =  f"<tags>\n{os.linesep.join(tags)}</tags>"
     if mode == 'single':
         return tags_string
-    return f'<n_samples>\n{n_samples}\n</n_samples>\n{tags_string}'
+    elif mode == 'history':
+        return f'<n_samples>\n{n_samples}\n</n_samples>\n{tags_string}'

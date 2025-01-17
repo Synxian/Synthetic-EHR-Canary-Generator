@@ -35,9 +35,13 @@ def single_history_system_prompt(example):
     <rule>
         All medical conditions, medications, and procedures must be clinically appropriate and logically related. For example, medications should match diagnoses, and procedures should align with the patient's conditions.
     </rule>
+    <rule>
+        The generated medical text must be extense, with a length comparable to the example.
+    </rule>
 </rules>
 <response_format>
-    Your response MUST be a valid xml file.
+    Your response MUST be a valid file in the same format as the example (i.e. if it's an xml, the you should output a valid xml file).
+    The output must be a valid json file, ready to be parsed as is.
 </response_format>
 """
 
@@ -65,13 +69,7 @@ def continuous_history_system_prompt(example):
 </example>
 <rules>
     <rule>
-        Each generated EHR must follow the style of the example. Contain the same tags and structure.
-    </rule>
-    <rule>
-        You will be provided with a list of tags and their descriptions. You must use them to construct the EHR.
-    </rule>
-    <rule>
-        You will receive a set of tags that represents an individual and a number n_samples that indicates the amount of files you must generate for said individual.
+        The generated EHR must follow the structure and style of the example.
     </rule>
     <rule>
         The generated medical text must be coherent in the context of doctor visits, always keeping in mind the generated thread of observations and the individual circumstances.
@@ -88,10 +86,27 @@ def continuous_history_system_prompt(example):
     <rule>
         Patient responses to treatments must be documented consistently across visits, showing either improvement, stability, or deterioration with appropriate clinical reasoning.
     </rule>
+    <rule>
+        Each generated medical text must be extense, with a length comparable to the example.
+    </rule>
+    <rule>
+        Each generated EHR MUST be a valid file in the same format as the example (i.e. if it's an xml, then the EHR should be a valid xml file).
+        At the end of each EHR, you must include a separator to indicate the end of the current EHR. The separator is |-|
+    </rule>
 </rules>
-<response_format>
-    Your response MUST be a valid JSON with a key: documents, that contains an array of XML strings:
-</response_format>
+<user_input>
+    You will receive two things:
+    <n_samples>
+        - A positive integer specifying the number of EHRs to generate
+        - Each generated EHR will maintain consistency with the base profile
+        - Each generated EHR is its own valid file, that mantains the same format as the example.
+        - Each EHR must be separated by |-|
+    <tags>
+        - Contains a structured list of attributes describing an individual
+        - May include demographic data, medical history, medications, etc.
+        - All tags must be properly formatted and contain valid values
+        - This data serves as the foundation for generating consistent EHRs
+</user_input>
 """
 
 SINGLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE = """

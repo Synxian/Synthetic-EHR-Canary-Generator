@@ -8,6 +8,7 @@ from tqdm.asyncio import tqdm
 from dotenv import load_dotenv
 from openai import RateLimitError
 from langchain_openai import ChatOpenAI
+from langchain_core.callbacks import StdOutCallbackHandler
 from meddocan import meddocan_prompt
 from utils import read_json, write_xml, prepare_input
 load_dotenv()
@@ -22,7 +23,7 @@ async def run_async_process(chain, output_dir, input_file, n_samples, mode):
                 for i in range(n_samples)
             )
         )
-    else:
+    elif mode == 'history':
         files = await tqdm.gather(
             *(
                 generate_canaries(chain, output_dir, [input], semaphore, mode, n_samples)
@@ -35,9 +36,13 @@ async def run_async_process(chain, output_dir, input_file, n_samples, mode):
         try:
             if mode == 'single':
                 write_xml(f'{output_dir}/canary_{i+1}.xml', files[i].content)
-            else:
-                list_of_files = json.loads(files[i].content)['documents']
+            elif mode == 'history':
+                with open(f'{output_dir}/backup_{i+1}.xml', 'w') as file:
+                    file.write(files[i].content)
+                list_of_files = files[i].content.split('|-|')
                 for j in range(len(list_of_files)):
+                    if (list_of_files[j] == '') or (list_of_files[j] == '\n'):
+                        continue
                     write_xml(f'{output_dir}/canary_{i+1}_{j+1}.xml', list_of_files[j])
         except Exception as e:
             print(f'Error writing file: {i}. \n {e}')
@@ -45,16 +50,19 @@ async def run_async_process(chain, output_dir, input_file, n_samples, mode):
 
 async def generate_canaries(chain, output_dir, inputs, semaphore, mode, n_samples=0):
     os.makedirs(output_dir, exist_ok=True)
-    requests = [process_input(chain, input, semaphore, mode, n_samples) for input in inputs]
+    requests = [ai_request(chain, input, semaphore, mode, n_samples) for input in inputs]
     files = await tqdm.gather(*requests, desc='Generating canaries')
     return [file for file in files if file is not None]
 
-async def process_input(chain, input_data, semaphore, mode, n_samples):
+async def ai_request(chain, input_data, semaphore, mode, n_samples):
     attempts = 0
     while attempts < 3:
         async with semaphore:
             try:
-                req = await chain.ainvoke({"user_input": prepare_input(input_data, mode, n_samples)})
+                input = prepare_input(input_data, mode, n_samples)
+                req = await chain.ainvoke(
+                    {"user_input": input}
+                )
                 return req
             except (json.JSONDecodeError, KeyError) as e:
                 print(f'Attempt {attempts + 1} failed: "{type(e).__name__}: {str(e)}"')
@@ -68,13 +76,18 @@ async def process_input(chain, input_data, semaphore, mode, n_samples):
                 attempts += 1
     return None
 
+def set_callback_handler():
+    handler = StdOutCallbackHandler()
+    return handler
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Your program description')
 
     parser.add_argument(
         '-o',
         '--output_dir',
-        help='Directory to save generated canaries'
+        help='Directory to save generated canaries',
+        default='generated_canaries'
     )
     parser.add_argument(
         '-d',
@@ -118,7 +131,7 @@ if __name__ == '__main__':
 
 
     model_name = "gpt-4o-mini"
-    llm = ChatOpenAI(model=model_name, temperature=args.temperature)
+    llm = ChatOpenAI(model=model_name, temperature=args.temperature, max_tokens=-1)
     if args.dataset == 'meddocan':
         chain = meddocan_prompt(args.mode) | llm
     asyncio.run(
