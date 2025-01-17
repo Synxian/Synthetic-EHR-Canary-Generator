@@ -1,24 +1,18 @@
 [
     [
-        {"tag": "NAME", "text": "Ana", "TYPE": "NOMBRE_SUJETO_ASISTENCIA"},
-        {"tag": "NAME", "text": "Fernandez", "TYPE": "NOMBRE_SUJETO_ASISTENCIA"},
-        {"tag": "AGE", "text": "37 años", "TYPE": "EDAD_SUJETO_ASISTENCIA"},
-        {"tag": "LOCATION", "text": "Madrid", "TYPE": "TERRITORIO"},
-        {"tag": "LOCATION", "text": "España", "TYPE": "PAIS"},
-        {"tag": "PHONE", "text": "98623487", "TYPE": "NUMERO_TELEFONO"},
-        {"tag": "EMAIL", "text": "anafernandez@email.com", "TYPE": "CORREO_ELECTRONICO"},
-        {"tag": "PROFESSION", "text": "Profesora", "TYPE": "PROFESION"},
-        {"tag": "HOSPITAL", "text": "Hospital Universitario de Madrid", "TYPE": "HOSPITAL"}
+        {"tag": "NAME", "text": "Jotaro"},
+        {"tag": "NAME", "text": "Kujo"},
+        {"tag": "AGE", "text": "37 años"},
+        {"tag": "LOCATION", "text": "Calle Losada Martí 23, 5 B"},
+        {"tag": "LOCATION", "text": "Tokio", "TYPE": "TERRITORIO"},
+        {"tag": "LOCATION", "text": "Japon", "TYPE": "PAIS"}
     ],
     [
-        {"tag": "NAME", "text": "Zacarias", "TYPE": "NOMBRE_SUJETO_ASISTENCIA"},
-        {"tag": "NAME", "text": "Teixido", "TYPE": "NOMBRE_SUJETO_ASISTENCIA"},
-        {"tag": "AGE", "text": "77 años", "TYPE": "EDAD_SUJETO_ASISTENCIA"},
-        {"tag": "LOCATION", "text": "Cochabamba", "TYPE": "TERRITORIO"},
-        {"tag": "LOCATION", "text": "Bolivia", "TYPE": "PAIS"},
-        {"tag": "PHONE", "text": "28451903", "TYPE": "NUMERO_TELEFONO"},
-        {"tag": "EMAIL", "text": "zacateixido@email.com", "TYPE": "CORREO_ELECTRONICO"},
-        {"tag": "PROFESSION", "text": "Carpintero", "TYPE": "PROFESION"},
-        {"tag": "HOSPITAL", "text": "Hospital de Cochabamba", "TYPE": "HOSPITAL"}
+        {"tag": "NAME", "text": "Jolyne"},
+        {"tag": "NAME", "text": "Kujo"},
+        {"tag": "AGE", "text": "37 años"},
+        {"tag": "LOCATION", "text": "Calle Losada Martí 23, 6 B"},
+        {"tag": "LOCATION", "text": "Tokio", "TYPE": "TERRITORIO"},
+        {"tag": "LOCATION", "text": "Japon", "TYPE": "PAIS"}
     ]
 ]
