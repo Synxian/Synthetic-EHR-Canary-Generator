@@ -109,7 +109,7 @@ if __name__ == '__main__':
         '-t',
         '--temperature',
         type=float,
-        help='GPT temperature',
+        help='Model temperature',
         default=0.5
     )
     parser.add_argument(
