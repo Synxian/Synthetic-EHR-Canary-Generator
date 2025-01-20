@@ -16,11 +16,14 @@ load_dotenv()
 async def run_async_process(llm, output_dir, input_file, n_samples, mode, prompts):
     semaphore = asyncio.Semaphore(20)
     inputs = read_json(input_file)
+    os.makedirs(output_dir, exist_ok=True)
     if mode == 'single':
+        os.makedirs(f'{output_dir}/single', exist_ok=True)
+        output_dir = f'{output_dir}/single'
         chain = prompts[mode] | llm
         files = await asyncio.gather(
             *(
-                generate_canaries(chain, output_dir, inputs, semaphore)
+                generate_canaries(chain, inputs, semaphore)
                 for i in range(n_samples)
             )
         )
@@ -32,6 +35,8 @@ async def run_async_process(llm, output_dir, input_file, n_samples, mode, prompt
                 print(f'Error writing file: {i}. \n {e}')
                 continue
     elif mode == 'history':
+        os.makedirs(f'{output_dir}/history', exist_ok=True)
+        output_dir = f'{output_dir}/history'
         await atqdm.gather(
             *(
                 generate_canaries_story(llm, output_dir, inputs[i], semaphore,\
@@ -41,23 +46,24 @@ async def run_async_process(llm, output_dir, input_file, n_samples, mode, prompt
             desc='Generating histories'
         )
 
-async def generate_canaries(chain, output_dir, inputs, semaphore):
-    os.makedirs(output_dir, exist_ok=True)
+async def generate_canaries(chain, inputs, semaphore):
     requests = [ai_request(chain, prepare_input(input), semaphore) for input in inputs]
     files = await atqdm.gather(*requests, desc='Generating canaries')
     return [file for file in files if file is not None]
 
-async def generate_canaries_story(llm, output_dir, input, semaphore, n_samples, set, prompts):
-    os.makedirs(output_dir, exist_ok=True)
+async def generate_canaries_story(
+    llm, output_dir, input, semaphore, n_samples, individual, prompts
+):
+    os.makedirs(f'{output_dir}/single/{individual}', exist_ok=True)
     base_chain = prompts['single'] | llm
     base = await ai_request(base_chain, prepare_input(input), semaphore)
     file = base.content
-    write_xml(f'{output_dir}/canary_{set}_1.xml', file)
+    write_xml(f'{output_dir}/canary_{individual}_1.xml', file)
     chain = prompts['history'] | llm
-    for i in tqdm(range(1, n_samples), desc=f'Generating history {set}'):
+    for i in tqdm(range(1, n_samples), desc=f'Generating history {individual}'):
         response = await ai_request(chain, file, semaphore)
         file = response.content
-        write_xml(f'{output_dir}/canary_{set}_{i+1}.xml', file)
+        write_xml(f'{output_dir}/canary_{individual}_{i+1}.xml', file)
 
 async def ai_request(chain, input, semaphore):
     attempts = 0

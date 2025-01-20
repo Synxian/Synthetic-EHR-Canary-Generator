@@ -1,7 +1,7 @@
 import os
 import json
 from prompts import (single_history_system_prompt, continuous_history_system_prompt,
-    SINGLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE)
+    SINGLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE, SINGLE_HISTORY_I2B2_HUMAN_EXAMPLE)
 from langchain_core.prompts import ChatPromptTemplate
 
 def read_xml(path):
@@ -26,6 +26,7 @@ def file_sample(dataset):
     return read_xml(f'examples/{dataset}/example.xml')
 
 def single_human_prompt_example(dataset):
+    dataset = dataset.upper()
     return globals()[f"SINGLE_HISTORY_{dataset}_HUMAN_EXAMPLE"]
 
 def ai_response_example(dataset):

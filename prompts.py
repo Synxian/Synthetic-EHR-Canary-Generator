@@ -111,22 +111,22 @@ SINGLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE = """
 SINGLE_HISTORY_I2B2_HUMAN_EXAMPLE = """
 <tags>
     <tag>
-        {"tag": "NAME", "text": "Walter Uribe", "TYPE": "PATIENT"}
+        {{{{"tag": "NAME", "text": "Walter Uribe", "TYPE": "PATIENT"}}}}
     </tag>
     <tag>
-        {"tag": "AGE", "text": "56", "TYPE": "AGE"}
+        {{{{"tag": "AGE", "text": "56", "TYPE": "AGE"}}}}
     </tag>
     <tag>
-        {"tag": "LOCATION", "text": "Amboy", "TYPE": "CITY"}
+        {{{{"tag": "LOCATION", "text": "Amboy", "TYPE": "CITY"}}}}
     </tag>
     <tag>
-        {"tag": "PROFESSION", "text": "manufacturing", "TYPE": "PROFESSION"}
+        {{{{"tag": "PROFESSION", "text": "manufacturing", "TYPE": "PROFESSION"}}}}
     </tag>
     <tag>
-        {"tag": "CONTACT", "text": "23324", "TYPE": "PHONE"}
+        {{{{"tag": "CONTACT", "text": "23324", "TYPE": "PHONE"}}}}
     </tag>
     <tag>
-        {"tag": "HOSPITAL", "text": "Saint Mary's Hospital Fallbright Center", "TYPE": "HOSPITAL"}
+        {{{{"tag": "HOSPITAL", "text": "Saint Mary's Hospital Fallbright Center", "TYPE": "HOSPITAL"}}}}
     </tag>
 </tags>
 """
