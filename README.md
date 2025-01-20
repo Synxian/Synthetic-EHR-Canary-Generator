@@ -6,7 +6,7 @@ To install the environment and interact with the environment execute:
 
 ```bash
 pipenv install #first install
-pipenv bash #open environment console
+pipenv shell #open environment console
 ```
 
 More info in [pipenv page](https://pipenv.pypa.io/en/latest/)
