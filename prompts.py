@@ -1,5 +1,3 @@
-from utils import read_xml
-
 def single_history_system_prompt(example):
     return f"""
 <role>
@@ -110,29 +108,25 @@ SINGLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE = """
 </tags>
 """
 
-MULTIPLE_HISTORY_MEDDOCAN_HUMAN_EXAMPLE = """
-<n_samples>
-    1
-</n_samples>
+SINGLE_HISTORY_I2B2_HUMAN_EXAMPLE = """
 <tags>
     <tag>
-        {{'tag': 'NAME', 'text': 'Jose', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'}}
+        {"tag": "NAME", "text": "Walter Uribe", "TYPE": "PATIENT"}
     </tag>
     <tag>
-        {{'tag': 'NAME', 'text': 'Aranda Martinez', 'TYPE': 'NOMBRE_SUJETO_ASISTENCIA'}}
+        {"tag": "AGE", "text": "56", "TYPE": "AGE"}
     </tag>
     <tag>
-        {{'tag': 'AGE', 'text': '37 años', 'TYPE': 'EDAD_SUJETO_ASISTENCIA'}}
+        {"tag": "LOCATION", "text": "Amboy", "TYPE": "CITY"}
     </tag>
     <tag>
-        {{'tag': 'LOCATION', 'text': 'Calle Losada Martí 23, 5 B', 'TYPE': 'CALLE'}}
+        {"tag": "PROFESSION", "text": "manufacturing", "TYPE": "PROFESSION"}
     </tag>
     <tag>
-        {{'tag': 'LOCATION', 'text': 'Madrid', 'TYPE': 'TERRITORIO'}}
+        {"tag": "CONTACT", "text": "23324", "TYPE": "PHONE"}
     </tag>
     <tag>
-        {{'tag': 'LOCATION', 'text': 'España', 'TYPE': 'PAIS'}}
+        {"tag": "HOSPITAL", "text": "Saint Mary's Hospital Fallbright Center", "TYPE": "HOSPITAL"}
     </tag>
 </tags>
 """
-MEDDOCAN_AI_RESPONSE = read_xml('examples/meddocan/response_example.xml')

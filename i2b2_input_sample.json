@@ -1,0 +1,13 @@
+[
+    [
+        {"tag": "NAME", "text": "Jotaro Kujo", "TYPE": "PATIENT"},
+        {"tag": "NAME", "text": "Kujo", "TYPE": "PATIENT"},
+        {"tag": "AGE", "text": "56", "TYPE": "AGE"},
+        {"tag": "LOCATION", "text": "Tokio", "TYPE": "CITY"},
+        {"tag": "LOCATION", "text": "Japan", "TYPE": "Country"},
+        {"tag": "CONTACT", "text": "9999999", "TYPE": "PHONE"},
+        {"tag": "PROFESSION", "text": "student", "TYPE": "PROFESSION"},
+        {"tag": "HOSPITAL", "text": "Morioh Hospital", "TYPE": "HOSPITAL"},
+        {"tag": "LOCATION", "text": "Speedwagon Foundation", "TYPE": "ORGANIZATION"}
+    ]
+]

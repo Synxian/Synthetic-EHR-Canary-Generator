@@ -10,8 +10,7 @@ from dotenv import load_dotenv
 from openai import RateLimitError
 from langchain_openai import ChatOpenAI
 from langchain_core.callbacks import StdOutCallbackHandler
-from meddocan import meddocan_prompt
-from utils import read_json, write_xml, prepare_input
+from utils import read_json, write_xml, prepare_input, prompt
 load_dotenv()
 
 async def run_async_process(llm, output_dir, input_file, n_samples, mode, prompts):
@@ -137,8 +136,10 @@ if __name__ == '__main__':
 
     model_name = "gpt-4o-mini"
     llm = ChatOpenAI(model=model_name, temperature=args.temperature)
-    if args.dataset == 'meddocan':
-        prompts = {'single': meddocan_prompt('single'), 'history': meddocan_prompt('history')}
+    prompts = {
+        'single': prompt('single', args.dataset),
+        'history': prompt('history' , args.dataset)
+    }
     asyncio.run(
         run_async_process(
             llm, args.output_dir, args.input_file, args.n_samples, args.mode, prompts
